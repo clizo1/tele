@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tele</title>
+<style>
+  /* La tele de SL: el video de YouTube a pantalla completa y, sin video, un cartel negro y rosa. */
+  html, body { margin: 0; height: 100%; background: #07060a; overflow: hidden; font-family: system-ui, sans-serif; }
+  #reproductor, #reproductor iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  #cartel { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center;
+            justify-content: center; gap: 2vh; color: #fff; text-align: center; background: #07060a; }
+  #cartel b { font-size: 9vh; color: #ff2d95; text-shadow: 0 0 3vh #ff2d95; }
+  #cartel span { font-size: 4.5vh; color: #ffd23f; max-width: 80vw; }
+  .oculto { opacity: 0; pointer-events: none; }
+  /* los controles: abajo, aparecen al pasar el mouse (se manejan desde SL con un clic en la pantalla) */
+  #tapa { position: absolute; inset: 0; }        /* tapa el video: el clic no le llega a YouTube */
+  #controles { position: absolute; left: 0; right: 0; bottom: 0; display: flex; gap: 1.2vw; align-items: center;
+               padding: 2.5vh 2.5vw; background: linear-gradient(transparent, rgba(7, 6, 10, .92) 35%);
+               transition: opacity .4s; }
+  #controles button { font-size: 5vh; min-width: 9vw; padding: 1vh 1vw; border-radius: 1.2vh; cursor: pointer;
+                      background: #17121c; color: #ffd23f; border: .4vh solid #ff2d95; }
+  #controles button:active { background: #ff2d95; color: #07060a; }
+  #link { flex: 1; min-width: 0; font-size: 3.6vh; padding: 1.4vh 1.2vw; border-radius: 1.2vh; border: .4vh solid #ffd23f;
+          background: #07060a; color: #fff; }
+  #aviso { position: absolute; left: 50%; top: 6vh; transform: translateX(-50%); padding: 1.2vh 2vw; border-radius: 1vh;
+           background: rgba(7, 6, 10, .85); color: #ffd23f; font-size: 3.6vh; border-left: .6vh solid #ff2d95;
+           transition: opacity .4s; }
+</style>
+</head>
+<body>
+<div id="reproductor"><div id="yt"></div></div>
+<div id="cartel"><b>📺 TELE</b><span>Pegá un link de YouTube abajo (o escribilo en el chat): lo vemos todos juntos</span></div>
+<div id="tapa"></div>
+<div id="aviso" class="oculto"></div>
+<div id="controles" class="oculto">
+  <button data-accion="atrasar" title="Atrasar 30 s">⏪</button>
+  <button data-accion="pausa" title="Pausa">⏸</button>
+  <button data-accion="seguir" title="Seguir">▶</button>
+  <button data-accion="adelantar" title="Adelantar 30 s">⏩</button>
+  <button data-accion="parar" title="Apagar">⏹</button>
+  <input id="link" placeholder="Pegá acá un link de YouTube" autocomplete="off">
+  <button id="poner" title="Poner el video">✔</button>
+</div>
+<script src="https://www.youtube.com/iframe_api"></script>
+<script src="tv.js"></script>
+</body>
+</html>
