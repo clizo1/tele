@@ -137,9 +137,12 @@ document.querySelectorAll("#controles [data-accion]").forEach(b =>
   b.addEventListener("click", () => mandar(b.dataset.accion)));
 function ponerLink() {
   const link = $("link").value.trim();
-  if (!/youtu/i.test(link)) return aviso("Eso no parece un link de YouTube");
+  if (!link) return;
   $("link").value = "";
-  mandar("poner", link);
+  if (/youtu/i.test(link)) return mandar("poner", link);
+  // una búsqueda: la pantalla va a YouTube (lo ven todos); al elegir un video, el objeto lo pasa a la tele sincronizada
+  aviso("Buscando en YouTube…");
+  location.href = "https://www.youtube.com/results?search_query=" + encodeURIComponent(link);
 }
 $("poner").addEventListener("click", ponerLink);
 $("link").addEventListener("keydown", ev => { if (ev.key === "Enter") ponerLink(); });
